@@ -15,7 +15,7 @@ const Profile= () => {
               <p>Hello, Kalpana Raj</p>
             </div>
             <div className="menu1">
-              <Link to="/mainpage" id="Sbtn"><button >Home</button></Link>
+              <Link to="/mainpage"><button >Home</button></Link>
               <Link to="/orderhistory"><button>My Orders</button></Link>
               <Link to="/yourbasket"><button>Basket</button></Link>
               <Link to="/faq"><button>FAQ</button></Link>
