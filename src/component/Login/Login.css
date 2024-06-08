@@ -1,0 +1,126 @@
+#parent{
+    height:100vh;
+    width: 100vw;
+    background: linear-gradient(to right, #2d6382 0%, #158e65 100%);  
+    justify-content: center;
+    display: flex;
+
+}
+#child{
+    height: 70%;
+    width: 60%;
+    background-color: black;
+    margin-top: 6rem;
+    opacity: 0.5;
+    display: grid;
+    justify-content: center;
+    color: white;
+}
+#login{
+    margin: 2rem;
+}
+#login h1{
+    text-align: center;
+}
+#login p{
+    font-size: 1.1rem;
+
+}
+#inpuDiv{
+    height: 2.15rem;
+    width: 31rem;
+    text-align: center;
+    background-color:#ACE2E1;
+    border-radius: 0.25rem;
+    color: red;
+    place-items: center;
+}
+#login input{
+    height: 2rem;
+    width: 27.75rem;
+    text-align: center;
+    background-color:#ACE2E1;
+    border-radius: 0.25rem;
+    border: none;
+}
+h1{
+    color: blue;
+
+}
+
+#child button{
+    width: 31rem;
+    height: 2rem;
+    background-color:#ACE2E1;
+    border: none;
+    color:black;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    place-items: center;
+}
+#btnDiv{
+    display: flex;
+    justify-content: center;
+}
+#sgn{
+    text-align: center;
+}
+
+#sgnL{
+    text-decoration: none;
+    color: yellow;
+}
+#icon{
+    margin: 8px;
+}
+#oEyes{
+    cursor: pointer;
+}
+@media screen and (max-width:380px)
+{
+    #inpuDiv{
+        width: 15rem;
+    }
+    #child button{
+        height: 1.75rem;
+        width: 10.5rem;
+    }
+}
+@media screen and ((min-width:380px) and (max-width:580px)) {
+    #child{
+        width: 80%;
+    }
+    #login p{
+        font-size: 1rem;
+    }
+    #child input{
+        height: 1.75rem;
+        width: 10rem;
+        text-align: center;
+    }
+    #child button{
+        height: 1.75rem;
+        width: 15.5rem;
+    }
+    #inpuDiv{
+        width:20rem ;
+    }
+}
+@media screen and (max-width:900px) {
+
+    #child input{
+        height: 2rem;
+        width: 15rem;
+        text-align: center;
+    }
+    #icon{
+        margin: 8px;
+    }
+    #child button{
+        height: 1.85rem;
+        width: 15.30rem;
+    }
+    #inpuDiv{
+        width: 18rem;
+    }
+}

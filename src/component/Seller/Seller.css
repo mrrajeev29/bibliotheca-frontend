@@ -1,0 +1,85 @@
+#sName{
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+}
+#spForm
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+#scForm{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+
+}
+#scForm label{
+    font-size: 1.5rem;
+    color:cornsilk;
+    margin-right: 2rem;
+}
+#scForm input,#scForm textarea{
+    width: 18rem;
+    height: 2.1rem;
+    margin-right: 5rem;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    font-size:medium;
+}
+#sDesc{
+    margin-top: 2rem;
+    
+}
+#scForm textarea{
+    height: 6rem;
+    font-size:x-large;
+}
+#sBtn{
+    display: flex;
+    justify-content: center;
+}
+#sBtn button{
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 15rem;
+    height: 3rem;
+}
+@media screen and (max-width:700px) {
+    #sName{
+        font-size: 2rem;
+    }
+    #scForm{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    
+    }
+    #scForm label{
+        font-size: 1rem;
+    }
+    #scForm input,#scForm textarea{
+        width: 10rem;
+        height: 1.5rem;
+        margin-right: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        border: none;
+        font-size:small;
+    }
+    #scForm textarea{
+        height: 4rem;
+        font-size:small;
+    }
+    #sBtn button{
+        width: 8rem;
+        height: 2rem;
+    }
+}
