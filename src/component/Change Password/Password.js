@@ -21,7 +21,7 @@ const Password=()=>{
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const url = `http://localhost:8080/api/change-password/${email}`;
+          const url = `https://bibliotheca-backend.onrender.com/api/change-password/${email}`;
           const { data: res } = await axios.put(url, data);
     
           console.log(res.message);
