@@ -4,9 +4,8 @@ import Footer from "../Footer/Footer";
 const Loader=()=>{
     return(
         <>
-        <Navbar/>
         <div className="loader"></div>
-        <Footer/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </>
     )
 }

@@ -8,7 +8,7 @@ const Contact= () => {
     return(
         <>
         <Navbar/>
-      <section className="contact">
+        <section className="contact">
         <div className="content">
           <h2>Contact Us</h2>
           <p><b>Connect us for asking any query or if you have any complain
@@ -28,14 +28,14 @@ const Contact= () => {
               <div className="icon"><i className="fa fa-phone" aria-hidden="true"></i></div>
               <div className="text">
                 <h3>Phone</h3>
-                <p style={{color:"white"}}><b>+91 7766903456</b></p>
+                <p style={{color:"white"}}><b>+91 6206409201</b></p>
               </div>
             </div>
             <div className="box">
               <div className="icon"><i className="fa fa-envelope" aria-hidden="true"></i></div>
               <div className="text">
                 <h3>Email</h3>
-                <p style={{color:"white"}}><b>aman@gmail.com</b></p>
+                <p style={{color:"white"}}><b>bibliotheca.pvt.ltd@gmail.com</b></p>
               </div>
             </div>
           </div>

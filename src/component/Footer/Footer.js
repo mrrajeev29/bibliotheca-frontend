@@ -16,19 +16,18 @@ const Footer=()=>{
             </p>
         </div>
         <div class="footer-center">
-            <div>
-                <i class="fa  fa-map-marker"></i>
-                <p><span>Vit Chennai</span>Tamil Nadu</p>
+            <div class="contact-item">
+                <i class="fa fa-map-marker"></i>
+                <p>Vit Chennai<span>Tamil Nadu</span></p>
             </div>
-            <div>
-                 <i class="fa fa-phone"></i>
-                 <p>+91 6206409201</p>
+            <div class="contact-item">
+                <i class="fa fa-phone"></i>
+                <p>+91 6206409201</p>
             </div>
-            <div>
+            <div class="contact-item">
                   <i class="fa fa-envelope"></i>
-                  <p>codeshare.code@gmail.com</p>
+                  <p>bibliotheca.pvt.ltd@gmail.com</p>
             </div>
-
         </div>
         <div class="footer-right">
             <p class="footer-company-about">

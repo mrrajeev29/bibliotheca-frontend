@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter,RouterProvider,} from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Signup from './component/Signup/Signup';
 import Login from './component/Login/Login';
 import MainPage from './component/MainPage/MainPage';
@@ -21,73 +21,78 @@ import Contact from './component/Contact/Contact';
 import Footer from './component/Footer/Footer';
 import History from './component/History/History';
 import Faq from './component/FAQ/Faq';
-const router= createBrowserRouter([
-  
+import Password from './component/Change Password/Password';
+
+const token = localStorage.getItem('token');
+
+const router = createBrowserRouter([
   {
-    path:"/",
-    element:<Login/>,
+    path: '/',
+    element: <Login />,
   },
   {
-    path:"signup",
-    element:<Signup/>
+    path: 'signup',
+    element: <Signup />,
   },
   {
-    path:"mainpage",
-    element: <MainPage/>
+    path: 'mainpage',
+    element: token ? <MainPage /> : <Navigate replace to="/" />,
   },
   {
-    path:"details",
-    element:<Detail/>
+    path: 'details',
+    element: token ? <Detail /> : <Navigate replace to="/" />,
   },
   {
-    path:"profile",
-    element:<Profile/>
+    path: 'profile',
+    element: token ? <Profile /> : <Navigate replace to="/" />,
   },
   {
-    path:"editinfo",
-    element:<Editinfo/>
+    path: 'editinfo',
+    element: token ? <Editinfo /> : <Navigate replace to="/" />,
   },
   {
-    path:"loading",
-    element:<Loader/>
+    path: 'loading',
+    element: token ? <Loader /> : <Navigate replace to="/" />,
   },
   {
-    path:"confirmed",
-    element:<Confirm/>
+    path: 'confirmed',
+    element: token ? <Confirm /> : <Navigate replace to="/" />,
   },
   {
-    path:"sell",
-    element:<Seller/>
+    path: 'sell',
+    element: token ? <Seller /> : <Navigate replace to="/" />,
   },
   {
-    path:"yourbasket",
-    element:<Basket/>
+    path: 'yourbasket',
+    element: token ? <Basket /> : <Navigate replace to="/" />,
   },
   {
-    path:"order",
-    element:<Delivery/>
+    path: 'order',
+    element: token ? <Delivery /> : <Navigate replace to="/" />,
   },
   {
-    path:"addnewaddress",
-    element:<Address/>
+    path: 'addnewaddress',
+    element: token ? <Address /> : <Navigate replace to="/" />,
   },
   {
-    path:"contact",
-    element:<Contact/>
+    path: 'contact',
+    element: token ? <Contact /> : <Navigate replace to="/" />,
   },
   {
-    path:"orderhistory",
-    element:<History/>
+    path: 'orderhistory',
+    element: token ? <History /> : <Navigate replace to="/" />,
   },
   {
-    path:"faq",
-    element:<Faq/>
-  }
+    path: 'faq',
+    element: token ? <Faq /> : <Navigate replace to="/" />,
+  },
+  {
+    path: 'change-password',
+    element: token ? <Password /> : <Navigate replace to="/" />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <RouterProvider router={router}/>
+root.render(<RouterProvider router={router} />);
 
-);
 reportWebVitals();

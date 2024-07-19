@@ -1,6 +1,7 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 window.onresize=function()
 {
@@ -28,6 +29,26 @@ onscroll=function()
 }
 const Navbar=()=>{
 
+
+    const [user, setUser] = useState([]);
+	const email = localStorage.getItem("email");
+	const getUserDetail=async()=>{
+	  try{
+		  const {data}=await axios.get(`http://localhost:8080/api/details/${email}`);
+			  setUser(data);
+              localStorage.setItem('UserName',user.Name);
+  
+	  }catch(error){
+		  console.log(error);
+  }}
+	  getUserDetail();
+
+
+	 const handleLogout = () => {
+		localStorage.removeItem("token");
+        localStorage.removeItem("email");
+	};
+
     return(
         <>
           <nav id="nMAin">
@@ -42,7 +63,7 @@ const Navbar=()=>{
             <div>
                 <ul id="navbar" >
                     <li id="i1" style={{display:"none"}}>
-                        <Link to="/profile"> Hi, User</Link>
+                        <Link to="/profile"> Hi, {user.Name}</Link>
                     </li>
                     <li>
                         <Link className=""
@@ -62,13 +83,13 @@ const Navbar=()=>{
                         <Link to="/contact">Contact</Link>
                     </li>
                     <li id="i2" style={{display:"none"}}>
-                        <Link to="/">Logout</Link>
+                        <Link to="/" onClick={handleLogout}>Logout</Link>
                     </li>
                     <li>
                         <div >
                             <ul id="navbar">
-                                <li><Link to="/profile">Hi, User</Link></li>
-                                <li><Link to="/">Logout</Link></li>
+                                <li><Link to="/profile">Hi, {user.Name}</Link></li>
+                                <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                             </ul>
                         </div>
                     </li>
