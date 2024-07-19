@@ -42,7 +42,7 @@ const EditInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:8080/api/personal-details/${user.email}`;
+      const url = `https://bibliotheca-backend.onrender.com/api/personal-details/${user.email}`;
       const { data: res } = await axios.put(url, data);
 
       console.log(res.message);
