@@ -32,7 +32,7 @@ const MainPage = () => {
     const getUserDetail = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`http://localhost:8080/api/all/`);
+        const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/all/`);
         setProduct(data);
       } catch (error) {
         console.log(error);
