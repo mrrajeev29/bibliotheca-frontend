@@ -17,12 +17,10 @@ const EditInfo= () => {
             <div className="menu1">
               <Link to="/profile"><button>Go Back</button></Link>
               <Link to="/orderhistory"><button>My Orders</button></Link>
-
               <Link to="/yourbasket"><button>Basket</button></Link>
               <Link to="/faq"><button>FAQ</button></Link>
-
               <Link to="/"><button>Logout</button></Link>
-            </div>
+            </div> 
           </div>
           <div className="main-content">
             <h2>Personal Information</h2>
