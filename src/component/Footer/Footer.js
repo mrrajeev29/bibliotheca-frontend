@@ -1,55 +1,60 @@
-import "./Footer.css"
-import {Link} from "react-router-dom"
+import "./Faq.css";
+import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
+const Faq = () => {
+    
+    const [activeIndex, setActiveIndex] = useState(null);
 
-const Footer=()=>{
-    return ( 
-        <>
-<footer class="footer-distributed">
-        <div class="footer-left">
-            <h3> <span>Bibliotheca</span></h3>
-            <p class="footer-links">
-                <Link to="/mainpage">Home</Link>
-                |                |
-                <Link to="/contact">Contact</Link>
-                | |
-                <Link to="/faq">Faq</Link>
-            </p>
-        </div>
-        <div class="footer-center">
-            <div class="contact-item">
-                <i class="fa fa-map-marker"></i>
-                <p>Vit Chennai<span>Tamil Nadu</span></p>
-            </div>
-            <div class="contact-item">
-                <i class="fa fa-phone"></i>
-                <p>+91 6206409201</p>
-            </div>
-            <div class="contact-item">
-                  <i class="fa fa-envelope"></i>
-                  <p>bibliotheca.pvt.ltd@gmail.com</p>
-            </div>
-        </div>
-        <div class="footer-right">
-            <p class="footer-company-about">
-                 <span>About the company</span>
-                 <strong>Bibliotheca</strong> is a website where you can find 
-                  many interesting and useful books.
-            </p>
-            <div class="footer-icons"> 
-            <a href="https://github.com/mrrajeev29" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+  const faqs = [
+    {
+      question: "What is your return policy?",
+      answer: "You can return any item within 30 days of purchase. The item must be in its original condition and packaging."
+    },
+    {
+      question: "How do I track my order?",
+      answer: "You can track your order using the tracking number provided in the shipping confirmation email."
+    },
+    {
+      question: "Do you ship internationally?",
+      answer: "Yes, we ship to most countries worldwide. Shipping fees and delivery times may vary based on the destination."
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept all major credit/debit cards, UPI, Net Banking, and Cash on Delivery."
+    },
+    {
+      question: "How can I contact customer service?",
+      answer: "You can contact our customer service via email at bibliotheca.pvt.ltd@gmail.com or call us at +123 456 7890."
+    }
+  ];
 
-                <a href="https://www.facebook.com/AarabhMalhotra.29" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                <a target="_blank" href="https://www.instagram.com/its_mr_rajeev/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a target="_blank" href="https://www.linkedin.com/in/rajeev-ranjan-9990b9226/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                <a target="_blank" href="https://twitter.com/PrinceG49181050"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            </div>
-            
-        </div>
-        
-        <p class="footer-company-name">Copyright © 2024 <strong>Team Bibliotheca</strong> All rights reserved</p>
+  const toggleFAQ = index => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
-    </footer>
-        </>
-    )
-}
-export default Footer;
+  return (
+<>
+<Navbar/>
+  <div className="faq-container">
+    <h1>Frequently Asked Questions</h1>
+    {faqs.map((faq, index) => (
+      <div key={index} className="faq">
+        <div className="faq-question" onClick={() => toggleFAQ(index)}>
+          {faq.question}
+          <span>{activeIndex === index ? '-' : '+'}</span>
+        </div>
+        <div className={`faq-answer ${activeIndex === index ? 'active' : ''}`}>
+          {faq.answer}
+        </div>
+      </div>
+    ))}
+  </div>
+  <Footer/>
+</>
+
+  );
+};
+
+export default Faq;
