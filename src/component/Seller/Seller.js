@@ -23,7 +23,7 @@ const Seller = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/all/');
+            const response = await axios.get('https://bibliotheca-backend.onrender.com/api/all/');
             setProducts(response.data);
         } catch (err) {
             setError(err.message);
@@ -43,7 +43,7 @@ const Seller = () => {
         try {
             console.log(data);
 
-            const url = 'http://localhost:8080/api/add-products/';
+            const url = 'https://bibliotheca-backend.onrender.com/api/add-products/';
             const { data: res } = await axios.post(url, data);
 
             console.log(res.message);
