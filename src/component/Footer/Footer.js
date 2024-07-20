@@ -6,7 +6,7 @@ const Footer=()=>{
         <>
 <footer class="footer-distributed">
         <div class="footer-left">
-            <h3>ARK <span>Developer</span></h3>
+            <h3> <span>Bibliotheca</span></h3>
             <p class="footer-links">
                 <Link to="/mainpage">Home</Link>
                 |                |
@@ -32,7 +32,7 @@ const Footer=()=>{
         <div class="footer-right">
             <p class="footer-company-about">
                  <span>About the company</span>
-                 <strong>ARK Developer</strong> is a website where you can find 
+                 <strong>Bibliotheca</strong> is a website where you can find 
                   many interesting and useful books.
             </p>
             <div class="footer-icons"> 
@@ -46,7 +46,7 @@ const Footer=()=>{
             
         </div>
         
-        <p class="footer-company-name">Copyright © 2024 <strong>ARKDeveloper</strong> All rights reserved</p>
+        <p class="footer-company-name">Copyright © 2024 <strong>Team Bibliotheca</strong> All rights reserved</p>
 
     </footer>
         </>
