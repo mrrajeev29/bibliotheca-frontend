@@ -7,9 +7,11 @@ import axios from 'axios';
 const Seller = () => {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
+    const uName=localStorage.getItem('UserName');
+    const email=localStorage.getItem('email');
     const [data, setData] = useState({
         id: -1,
-        sellerName: "me",
+        sellerName:email,
         Name: "",
         author: "",
         caption: "",
@@ -21,7 +23,7 @@ const Seller = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await axios.get('https://bibliotheca-backend.onrender.com/api/all/');
+            const response = await axios.get('http://localhost:8080/api/all/');
             setProducts(response.data);
         } catch (err) {
             setError(err.message);
@@ -41,7 +43,7 @@ const Seller = () => {
         try {
             console.log(data);
 
-            const url = 'https://bibliotheca-backend.onrender.com/api/add-products/';
+            const url = 'http://localhost:8080/api/add-products/';
             const { data: res } = await axios.post(url, data);
 
             console.log(res.message);
@@ -56,11 +58,11 @@ const Seller = () => {
         setData({ ...data, [input.name]: input.value });
     };
 
-    const UserName=localStorage.getItem('UserName')
+    //const UserName=localStorage.getItem('UserName')
     return (
         <>
             <Navbar />
-            <p id="sName">Seller : {UserName}</p>
+            <p id="sName">Seller : {uName}</p>
             <form id="spForm" onSubmit={handleSubmit}>
                 <div id="scForm">
                     <label>Book's Name :</label>
