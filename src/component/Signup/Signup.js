@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Signup = () => {
@@ -10,18 +10,20 @@ const Signup = () => {
         email: "",
         password: ""
     });
+    const navigate=useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             console.log(data);
 
-            const url = 'https://bibliotheca-backend.onrender.com/api/';
+            const url = 'http://localhost:8080/api/';
             const { data: res } = await axios.post(url, data);
 
             console.log(res.message);
             alert('Signup Successful.');
-            window.location.reload();
+           // window.location.reload();
+           navigate("/")
         } catch (error) {
             if (
                 error.response &&
