@@ -17,7 +17,7 @@ const Signup = () => {
         try {
             console.log(data);
 
-            const url = 'https://bibliotheca-backend.onrender.com/';
+            const url = 'http://localhost:8080/api/';
             const { data: res } = await axios.post(url, data);
 
             console.log(res.message);

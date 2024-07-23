@@ -26,7 +26,7 @@ const Faq = () => {
     },
     {
       question: "How can I contact customer service?",
-      answer: "You can contact our customer service via email at support@example.com or call us at +123 456 7890."
+      answer: "You can contact our customer service via email at bibliotheca.pvt.ltd@gmail.com or call us at +123 456 7890."
     }
   ];
 
