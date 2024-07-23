@@ -21,7 +21,7 @@ const Login=()=>{
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const url = "https://bibliotheca-backend.onrender.com/login/";
+          const url = "https://bibliotheca-backend.onrender.com/api/login/";
           const { data: res } = await axios.post(url, data);
           localStorage.setItem("token", res.data);
           localStorage.setItem("email", data.email);
