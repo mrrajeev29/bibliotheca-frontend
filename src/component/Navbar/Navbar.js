@@ -30,11 +30,11 @@ onscroll=function()
 const Navbar=()=>{
 
 
-    const [user, setUser] = useState([]);
+   /* const [user, setUser] = useState([]);
 	const email = localStorage.getItem("email");
 	const getUserDetail=async()=>{
 	  try{
-		  const {data}=await axios.get(`https://bibliotheca-backend.onrender.com/api/details/${email}`);
+		  const {data}=await axios.get(`http://localhost:8080/api/details/${email}`);
 			  setUser(data);
               localStorage.setItem('UserName',user.Name);
   
@@ -42,7 +42,8 @@ const Navbar=()=>{
 		  console.log(error);
   }}
 	  getUserDetail();
-
+*/
+    const un=localStorage.getItem('UserName')
 
 	 const handleLogout = () => {
 		localStorage.removeItem("token");
@@ -63,7 +64,7 @@ const Navbar=()=>{
             <div>
                 <ul id="navbar" >
                     <li id="i1" style={{display:"none"}}>
-                        <Link to="/profile"> Hi, {user.Name}</Link>
+                        <Link to="/profile"> Hi, {un}</Link>
                     </li>
                     <li>
                         <Link className=""
@@ -88,7 +89,7 @@ const Navbar=()=>{
                     <li>
                         <div >
                             <ul id="navbar">
-                                <li><Link to="/profile">Hi, {user.Name}</Link></li>
+                                <li><Link to="/profile">Hi, {un}</Link></li>
                                 <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
                             </ul>
                         </div>

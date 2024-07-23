@@ -25,7 +25,6 @@ const ReadMore = ({ children }) => {
 	);
 }; 
 
-
 const Detail= () => {
     const location = useLocation();
     const data = location.state;
@@ -55,19 +54,19 @@ const Detail= () => {
     <div class="container2">
       <div class="image-section5">
         <div class="thumbnail-a5">
-          <img class="thumbnail5" src={data.img} />
+          <img class="thumbnail5" src={data.Img} />
         </div>
       </div>
       <div class="details-section">
-        <h1 class="product-name">{data.title}</h1>
+        <h1 class="product-name">{data.Name}</h1>
         <h4 style={{color:"white"}} >{data.author}</h4>
         <div class="price">
-          <span class="discount-price">₹{0.7*data.price}</span>
-          <span class="original-price">₹{data.price}</span>
+          <span class="discount-price">₹{parseInt(0.7*data.Price)}</span>
+          <span class="original-price">₹{data.Price}</span>
           <span class="discount">30% off</span>
         </div>
         <p class="stock">In stock: Dispatch in 5 working days</p>
-        <p>Stock Left : {data.available-data.quantity}</p>
+        <p>Stock Left : {data.initialAvl}</p>
         <div class="quantity">
           <button onClick={() => changeQuantity('decrease')}>-</button>
           <span>{quantity}</span>
@@ -88,8 +87,9 @@ const Detail= () => {
     </div>
     <div class="description2">
     <h1>Product Description</h1>
-    <p>{data.title}</p>
-    <ReadMore>{data.description}</ReadMore>
+    <h2 style={{color:"yellow"}}>{data.Name}</h2>
+    <ReadMore>{data.caption}</ReadMore>
+
     </div>
     <Footer/>
     </>

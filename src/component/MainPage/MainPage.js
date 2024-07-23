@@ -27,6 +27,7 @@ const MainPage = () => {
   const [search, setSearch] = useState('');
   const [product, setProduct] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const email=localStorage.getItem("email")
 
   useEffect(() => {
     const getUserDetail = async () => {
@@ -42,27 +43,56 @@ const MainPage = () => {
     getUserDetail();
   }, []);
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = async(id) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [id]: (prevQuantities[id] || 0) + 1
     }));
+    try {
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/add-product/${email}/${id}`)
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/increase-amount/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleIncrease = (id, available) => {
+  const handleIncrease = async(id) => {
+    if(quantities[id]!=product[id].initialAvl){
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]: Math.min((prevQuantities[id] || 0) + 1, available)
+      [id]: Math.min((prevQuantities[id] || 0) + 1)
     }));
+    try {
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/update-quantity/${email}/${id}`);
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/increase-amount/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  else{
+    alert("Product out of stock")
+  }
   };
 
-  const handleDecrease = (id) => {
+  const handleDecrease =async (id) => {
     if (quantities[id] > 0) {
       setQuantities((prevQuantities) => ({
         ...prevQuantities,
         [id]: prevQuantities[id] - 1
       }));
+    
+
+    try {
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/dec-quantity/${email}/${id}`);
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/decrease-amount/${id}`);
+    } catch (error) {
+      console.log(error);
     }
+  }
+  else
+  {
+    alert("You have not added the product")
+  }
   };
 
   return (
@@ -92,49 +122,50 @@ const MainPage = () => {
                   book?.author.toLowerCase().includes(search.toLowerCase()) ||
                   book?.caption.toLowerCase().includes(search.toLowerCase());
             })
-            .map((book) => (
-              <>
-                <br />
-                <div id="cCard" key={book.id} onMouseEnter={() => Show(book.id)} onMouseLeave={() => Hide(book.id)}>
-                  <span id="br"></span>
-                  <div id="Details">
-                    <img id="bookImg" src={book.Img} alt={book.Name} />
-                    <div id="bDetails">
-                      <br />
-                      <Link style={{ textDecoration: "none" }} to="/details" state={book}>
-                        <h2>{book.Name}</h2>
-                      </Link>
-                      <h4>{book.author}</h4>
-                      <ReadMore id="desc">{book.caption}</ReadMore>
-                    </div>
-                    <div id="purchase">
-                      <h3>
-                        Available: {book.initialAvl - (quantities[book.id] || 0)}/{book.initialAvl}
-                      </h3>
-                      <br />
-                      {quantities[book.id] > 0 ? (
-                        <div className="quantity-container" id="atc">
-                          <button className="quantity-button" onClick={() => handleDecrease(book.id)}>-</button>
-                          <span value={quantities[book.id]} id="quant">
-                            {quantities[book.id]}
-                          </span>
-                          <button
-                            className="quantity-button"
-                            onClick={() => handleIncrease(book.id, book.initialAvl)}
-                            disabled={quantities[book.id] >= book.initialAvl}
-                          >
-                            +
-                          </button>
-                        </div>
-                      ) : (
+            .map((book, index) => (
+              <div id="cCard" key={book.id} onMouseEnter={() => Show(index)} onMouseLeave={() => Hide(index)}>
+                <span id="br"></span>
+                <div id="Details">
+                  <img id="bookImg" src={book.Img} alt={book.Name} />
+                  <div id="bDetails">
+                    <Link style={{ textDecoration: "none" }} to="/details" state={book}>
+                      <h2>{book.Name}</h2>
+                    </Link>
+                    <h4>{book.author}</h4>
+                    <ReadMore id="desc">{book.caption}</ReadMore>
+                  </div>
+                  <div id="purchase">
+                    {book.initialAvl <= 0 ? (
+                      <h3 className="out-of-stock">Out of stock</h3>
+                    ) : (
+                      <>
+                        <h3 className="available">
+                          Available: {book.initialAvl - (quantities[book.id] || 0)}
+                        </h3>
+                        <br />
+                        {quantities[book.id] > 0 ? (
+
+                          <div className="quantity-container" id="atc">
+                            <button className="quantity-button" onClick={() => handleDecrease(book.id)}>-</button>
+                            <span value={quantities[book.id]} id="quant">
+                             {quantities[book.id]>0?quantities[book.id]:0}
+                            </span>
+                            <button
+                              className="quantity-button"
+                              onClick={() => handleIncrease(book.id)}
+                            >
+                              +
+                            </button>
+                          </div>):(
                         <button className="add-button" onClick={() => handleAddToCart(book.id)}>
                           <i className="fa fa-cart-arrow-down" aria-hidden="true"></i> Add
                         </button>
                       )}
-                    </div>
+                      </>
+                    )}
                   </div>
                 </div>
-              </>
+              </div>
             ))
         )}
       </div>
@@ -146,32 +177,32 @@ const MainPage = () => {
 export default MainPage;
 
 function Show(i) {
-  var a = document.querySelectorAll("#bDetails");
-  var b = document.querySelectorAll(".text");
-  var c = document.querySelectorAll("#bookImg");
-  var d = document.querySelectorAll("#cCard");
+  const details = document.querySelectorAll("#bDetails")[i];
+  const text = document.querySelectorAll(".text")[i];
+  const bookImg = document.querySelectorAll("#bookImg")[i];
+  const card = document.querySelectorAll("#cCard")[i];
 
   if (window.innerWidth >= 670) {
-    a[i].style.marginTop = "-2rem";
-    c[i].style.width = "19%";
-    c[i].style.height = "10%";
-    c[i].style.marginLeft = "0rem";
-    d[i].style.height = "fit-content";
-    b[i].style.display = "flex";
+    details.style.marginTop = "-2rem";
+    bookImg.style.width = "19%";
+    bookImg.style.height = "10%";
+    bookImg.style.marginLeft = "0rem";
+    card.style.height = "fit-content";
+    text.style.display = "flex";
   } else {
-    b[i].style.display = "none";
+    text.style.display = "none";
   }
 }
 
 function Hide(i) {
-  var a = document.querySelectorAll("#bDetails");
-  var b = document.querySelectorAll(".text");
-  var c = document.querySelectorAll("#bookImg");
-  var e = document.querySelectorAll("#purchase");
+  const details = document.querySelectorAll("#bDetails")[i];
+  const text = document.querySelectorAll(".text")[i];
+  const bookImg = document.querySelectorAll("#bookImg")[i];
+
   if (window.innerWidth >= 670) {
-    a[i].style.marginTop = "2rem";
-    b[i].style.display = "none";
-    c[i].style.width = "190px";
-    c[i].style.height = "185px";
+    details.style.marginTop = "2rem";
+    text.style.display = "none";
+    bookImg.style.width = "190px";
+    bookImg.style.height = "185px";
   }
 }

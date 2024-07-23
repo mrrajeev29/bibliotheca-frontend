@@ -48,7 +48,6 @@ const EditInfo = () => {
       console.log(res.message);
       alert('Update Successful.');
       navigate("/profile")
-      //window.location.reload();
     } catch (error) {
       console.log(error);
     }

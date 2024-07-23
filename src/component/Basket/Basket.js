@@ -1,176 +1,108 @@
 import "./Basket.css";
 import Navbar from "../Navbar/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const ReadMore = ({ children }) => {
-	const text = children;
-	const [isReadMore, setIsReadMore] = useState(true);
-	const toggleReadMore = () => {
-		setIsReadMore(!isReadMore);
-	};
-	return (
-		<p className="text" style={{display:"none"}}>
-			{isReadMore ? text.slice(0, 100) : text}
-			<span
-				onClick={toggleReadMore}
-				className="read-or-hide"
-				style={{ color: "red"}}
-			>
-				{isReadMore ? "...read more" : " show less"}
-			</span>
-		</p>
-	);
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  return (
+    <p className="text" style={{ display: "none" }}>
+      {isReadMore ? text.slice(0, 100) : text}
+      <span onClick={toggleReadMore} className="read-or-hide" style={{ color: "red" }}>
+        {isReadMore ? "...read more" : " show less"}
+      </span>
+    </p>
+  );
 };
-const data=[{
-    id: 0,
-    title: "Cengage College Algebra",
-    author: "Gustafson Hughes",
-    img: "https://www.cengage.com/covers/imageServlet?image_type=LRGFC&catalog=cengage&epi=36773094918742522091049498331432346312",
-    description: "A book for aspiring engineers to prepare for JEE Main and Advanced with conceptual and coherent approach to mathematics. Learn from the author G. Tewani and access more resources...",
-    available: 10,
-    price: 840,
-    quantity:4
-}, 
-{
-    id: 1,
-    title: "The Diary of a young girl",
-    author: "Anne Frank",
-    img: "https://tse1.mm.bing.net/th?id=OIP.1Q8a2ur6NLzaY7YNHDpnPwC0Es&pid=Api&P=0&h=180",
-    description: "Annelies Marie Frank was a German-Dutch diarist of Jewish heritage. One of the most discussed Jewish victims of the Holocaust...",
-    available: 2,
-    price: 140,
-    quantity:1
 
-},{
-    id: 2,
-    title: "Cengage College Algebra",
-    author: "Gustafson Hughes",
-    img: "https://www.cengage.com/covers/imageServlet?image_type=LRGFC&catalog=cengage&epi=36773094918742522091049498331432346312",
-    description: "A book for aspiring engineers to prepare for JEE Main and Advanced with conceptual and coherent approach to mathematics. Learn from the author G. Tewani and access more resources...",
-    available: 10,
-    price: 840,
-    quantity:4
-}, {
-    id: 3,
-    title: "Cengage College Algebra",
-    author: "Gustafson Hughes",
-    img: "https://www.cengage.com/covers/imageServlet?image_type=LRGFC&catalog=cengage&epi=36773094918742522091049498331432346312",
-    description: "A book for aspiring engineers to prepare for JEE Main and Advanced with conceptual and coherent approach to mathematics. Learn from the author G. Tewani and access more resources...",
-    available: 10,
-    price: 840,
-    quantity:4
-}, 
-]
+const Basket = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const email = localStorage.getItem("email");
 
-const Basket=()=>{
-    const [quantities, setQuantities] = useState({});
-
-  const handleAddToCart = (id) => {
-
-      setQuantities((prevQuantities) => ({
-          ...prevQuantities,
-          [id]: (prevQuantities[id] || 0) + 1
-      }));
-  };
-
-  const handleIncrease = (id, available) => {
-      setQuantities((prevQuantities) => ({
-          ...prevQuantities,
-          [id]: Math.min((prevQuantities[id] || 0) + 1, available)
-      }));
-  };
-
-  const handleDecrease = (id) => {
-      if (quantities[id] > 0) {
-          setQuantities((prevQuantities) => ({
-              ...prevQuantities,
-              [id]: prevQuantities[id] - 1
-          }));
-      }
-  };
-    return(
-        <>
-        <Navbar/>
-        <div id="pCard">
-                {data.map(book => (
-                <>
-                <br/>
-                <div id="cCard" key={book.id} onMouseEnter={() => Show(book.id)} onMouseLeave={() => Hide(book.id)}>
-                    <span id="br"></span>
-                    <div id="Details">
-                        <img id="bookImg" src={book.img} />
-                        <div id="bDetails"><br/>
-                            <Link style={{textDecoration:"none"}}  to="/details" state={book} ><h2>{book.title}</h2></Link>
-                            <h4>{book.author}</h4>
-                            <ReadMore id="desc">{book.description}</ReadMore>
-                        </div>
-                        <div id="Bpurchase">
-                            <h3>Quantity : {book.quantity}</h3>
-                            <br />
-                            <Link to="/details" state={book}>
-                            <button className="add-button" >
-                            <i class="fa fa-shopping-bag" aria-hidden="true"></i> Buy Now
-                            </button>
-                            </Link>
-                            <Link>
-                            <button className="add-button" >
-                            <i class="fa fa-times" aria-hidden="true"></i>  Remove
-                            </button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                </>
-            ))}
-        </div>
-        <Footer/>
-        </>
-    )
-}
-export default Basket;
-
-function Show(i)
-{
-
-   // alert(i)
-    var a=document.querySelectorAll("#bDetails");
-    var b=document.querySelectorAll(".text");
-   // var b=document.getElementsByClassName("text")
-    var c=document.querySelectorAll("#bookImg");
-    var d=document.querySelectorAll("#cCard");
-    
-   // alert(a.id)
-   if(window.innerWidth>=670)
-    {
-    a[i].style.marginTop="-2rem";
-    c[i].style.width="19%";
-    c[i].style.height="10%";
-    c[i].style.marginLeft="0rem";
-    d[i].style.height="fit-content";
-    //e[i].style.marginLeft="58rem"
-            b[i].style.display="flex";
-
-        }
-    else
-    {
-        b[i].style.display="none";   
+  const getUserDetail = async () => {
+    try {
+      const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/details/${email}`);
+      setUser(data);
+    } catch (error) {
+      console.log(error);
     }
-}
+  };
 
-function Hide(i)
-{   
-    var a=document.querySelectorAll("#bDetails");
-    var b=document.querySelectorAll(".text");
-    var c=document.querySelectorAll("#bookImg");
-   // var e=document.querySelectorAll("#purchase");
-    if(window.innerWidth>=670)
-        {
-    a[i].style.marginTop="2rem";
-    b[i].style.display="none";
-    c[i].style.width="190px";
-    c[i].style.height="185px";
-        }
-    //e[i].style.marginLeft="45rem"
-}
+  const getProducts = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/all/`);
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUserDetail();
+    getProducts();
+  }, [email]);
+
+  return (
+    <>
+      <Navbar />
+      <div id="pCard">
+        <br />
+        {loading ? (
+          <Loader />
+        ) : (
+          user && user.Basket && user.Basket.length === 0 ? (
+            <>
+            <h1 style={{color:"white"}}>Nothing in the basket.....</h1>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            </>
+          ) : (
+            user &&
+            user.Basket &&
+            user.Basket.map((ind) => (
+              <div id="cCard" key={products[ind].id}>
+                <span id="br"></span>
+                <div id="Details">
+                  <img id="bookImg" src={products[ind].Img} alt={products[ind].Name} />
+                  <div id="bDetails">
+                    <br />
+                    <Link style={{ textDecoration: "none" }} to="/details" state={products[ind]}>
+                      <h2>{products[ind].Name}</h2>
+                    </Link>
+                    <h4>{products[ind].author}</h4>
+                    <ReadMore id="desc">{products[ind].caption}</ReadMore>
+                  </div>
+                  <div id="Bpurchase">
+                    <h3>Quantity : {user.purchaseQuantity[user.Basket.indexOf(ind)]}</h3>
+                    <br />
+                    <Link to="/details" state={products[ind]}>
+                      <button className="add-button">
+                        <i className="fa fa-shopping-bag" aria-hidden="true"></i> Buy Now
+                      </button>
+                    </Link>
+                    <button className="add-button">
+                      <i className="fa fa-times" aria-hidden="true"></i> Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )
+        )}
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+export default Basket;

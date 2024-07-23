@@ -4,7 +4,6 @@
     background: linear-gradient(to right, #2d6382 0%, #158e65 100%);  
     justify-content: center;
     display: flex;
-
 }
 #child{
     height: 70%;
