@@ -6,6 +6,8 @@ import React, {useRef} from 'react';
 import emailjs from '@emailjs/browser';
 
 const Contact= () => {
+  const email=localStorage.getItem('email')
+  const un=localStorage.getItem('UserName')
   const form = useRef();
   const sendEmail = (e) => {
   e.preventDefault();
@@ -15,7 +17,8 @@ const Contact= () => {
     })
     .then(
       () => {
-        console.log('SUCCESS!');
+        alert("Mail Sent. Team will contact you soon...")
+        window.location.reload();
       },
       (error) => {
         console.log('FAILED...', error.text);
@@ -60,11 +63,16 @@ const Contact= () => {
           <form ref={form} onSubmit={sendEmail}>
             <h2>Send Mesaage</h2>
             <div className="inputBox">
-              <input type="text"  name='from_name'  required/>
+              <input type="text"  name='from_name' defaultValue={un} readOnly/>
               <span>Full Name</span>
             </div>
             <div className="inputBox">
-              <input type="text"  name='your_email'  required/>
+            <input 
+  type="text" 
+  name="your_email" 
+  defaultValue={email} 
+  readOnly 
+/>
               <span>Email</span>
             </div>
             <div className="inputBox">
