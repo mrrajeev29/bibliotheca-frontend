@@ -34,7 +34,7 @@ const Navbar=()=>{
 	const email = localStorage.getItem("email");
 	const getUserDetail=async()=>{
 	  try{
-		  const {data}=await axios.get(`http://localhost:8080/api/details/${email}`);
+		  const {data}=await axios.get(`https://bibliotheca-backend.onrender.com/api/details/${email}`);
 			  setUser(data);
               localStorage.setItem('UserName',user.Name);
   
