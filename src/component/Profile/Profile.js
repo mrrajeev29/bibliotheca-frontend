@@ -23,8 +23,12 @@ const Profile= () => {
     const handleLogout = () => {
       localStorage.removeItem("token");
           localStorage.removeItem("email");
+          localStorage.removeItem("UserName");
+          localStorage.removeItem("address");
+
     };
 
+    localStorage.setItem("address",user.address)
 
 
     return (

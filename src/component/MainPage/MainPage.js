@@ -5,6 +5,9 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import Loader from "../Loader/Loader";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -27,21 +30,40 @@ const MainPage = () => {
   const [search, setSearch] = useState('');
   const [product, setProduct] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const email=localStorage.getItem("email")
+  const email=localStorage.getItem("email");
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const getUserDetail = async () => {
       setLoading(true);
       try {
+        //toast("Welcome...")
         const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/all/`);
         setProduct(data);
+        
       } catch (error) {
         console.log(error);
       }
       setLoading(false);
     };
     getUserDetail();
+    const getDetail = async () => {
+      setLoading(true);
+      try {
+        const {data}=await axios.get(`https://bibliotheca-backend.onrender.com/api/details/${email}`);
+			  setUser(data);
+        
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    };
+    getDetail();
   }, []);
+ // alert(user)
+ localStorage.setItem("UserName",user.Name);
+localStorage.setItem("address",user.address)
+
 
   const handleAddToCart = async(id) => {
     setQuantities((prevQuantities) => ({
@@ -49,6 +71,7 @@ const MainPage = () => {
       [id]: (prevQuantities[id] || 0) + 1
     }));
     try {
+      toast("Product added to basket....")
       await axios.put(`https://bibliotheca-backend.onrender.com/api/add-product/${email}/${id}`)
       await axios.put(`https://bibliotheca-backend.onrender.com/api/increase-amount/${id}`);
     } catch (error) {
@@ -70,7 +93,7 @@ const MainPage = () => {
     }
   }
   else{
-    alert("Product out of stock")
+    toast("Product out of stock")
   }
   };
 
@@ -91,13 +114,14 @@ const MainPage = () => {
   }
   else
   {
-    alert("You have not added the product")
+    toast("You have not added the product")
   }
   };
 
   return (
     <>
       <Navbar />
+      <ToastContainer />
 
       <div className="search-bar-container">
         <input
@@ -129,7 +153,7 @@ const MainPage = () => {
                   <img id="bookImg" src={book.Img} alt={book.Name} />
                   <div id="bDetails">
                     <Link style={{ textDecoration: "none" }} to="/details" state={book}>
-                      <h2>{book.Name}</h2>
+                      <h2 onClick={()=>{localStorage.setItem("quant",0)}}>{book.Name}</h2>
                     </Link>
                     <h4>{book.author}</h4>
                     <ReadMore id="desc">{book.caption}</ReadMore>

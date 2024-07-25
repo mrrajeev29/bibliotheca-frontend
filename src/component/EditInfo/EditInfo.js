@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const EditInfo = () => {
   const location = useLocation();
@@ -46,7 +48,7 @@ const EditInfo = () => {
       const { data: res } = await axios.put(url, data);
 
       console.log(res.message);
-      alert('Update Successful.');
+      toast('Update Successful.');
       navigate("/profile")
     } catch (error) {
       console.log(error);
@@ -60,6 +62,8 @@ const EditInfo = () => {
   return (
     <>
       <Navbar />
+      <ToastContainer />
+
       <div className="container1">
         <div className="sidebar1">
           <div className="profile1">

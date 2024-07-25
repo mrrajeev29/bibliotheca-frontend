@@ -4,7 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import React, {useRef} from 'react';
 import emailjs from '@emailjs/browser';
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Contact= () => {
   const email=localStorage.getItem('email')
   const un=localStorage.getItem('UserName')
@@ -17,17 +18,23 @@ const Contact= () => {
     })
     .then(
       () => {
-        alert("Mail Sent. Team will contact you soon...")
         window.location.reload();
+
       },
       (error) => {
         console.log('FAILED...', error.text);
       },
     );
   };
+  window.onload = () => {
+    toast("Mail Sent. Team will contact you soon...")
+
+  };
   return(
       <>
       <Navbar/>
+      <ToastContainer />
+
       <section className="contact">
       <div className="content">
         <h2>Contact Us</h2>

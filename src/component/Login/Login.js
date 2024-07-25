@@ -2,8 +2,9 @@ import react, { useState } from "react";
 import "./Login.css";
 import { Link} from "react-router-dom";
 import axios from 'axios';
-
- 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+  
 const Login=()=>{
 
     const [error, setError] = useState("");
@@ -21,10 +22,12 @@ const Login=()=>{
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            toast("Logging you in....")
           const url = "https://bibliotheca-backend.onrender.com/api/login/";
           const { data: res } = await axios.post(url, data);
           localStorage.setItem("token", res.data);
           localStorage.setItem("email", data.email);
+          //localStorage.setItem("email", data.name);
     
           window.location = "/mainpage";
         //  alert(res.data)
@@ -35,6 +38,7 @@ const Login=()=>{
             error.response.status <= 500
           ) {
             setError(error.response.data.message);
+            toast("Invalid credentials....")
           }
         }
       };
@@ -43,6 +47,8 @@ const Login=()=>{
 
     return(
         <>
+                <ToastContainer />
+
         <div id="parent" >
             <form id="child" onSubmit={handleSubmit}>
             <div id="login" >

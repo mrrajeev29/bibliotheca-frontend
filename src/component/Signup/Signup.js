@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Signup = () => {
     const [error, setError] = useState("");
     const [data, setData] = useState({
@@ -21,7 +22,7 @@ const Signup = () => {
             const { data: res } = await axios.post(url, data);
 
             console.log(res.message);
-            alert('Signup Successful.');
+            toast('Signup Successful.');
            // window.location.reload();
            navigate("/")
         } catch (error) {
@@ -57,6 +58,8 @@ const Signup = () => {
 
     return (
         <>
+              <ToastContainer />
+
             <div id="parent">
                 <div id="child">
                     <div id="login">

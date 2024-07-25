@@ -5,16 +5,17 @@ import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ReadMore = ({ children }) => {
-  const text = children;
   const [isReadMore, setIsReadMore] = useState(true);
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
   return (
-    <p className="text" style={{ display: "none" }}>
-      {isReadMore ? text.slice(0, 100) : text}
+    <p className="text" style={{ display: "block" }}>
+      {isReadMore ? children.slice(0, 100) : children}
       <span onClick={toggleReadMore} className="read-or-hide" style={{ color: "red" }}>
         {isReadMore ? "...read more" : " show less"}
       </span>
@@ -53,23 +54,46 @@ const Basket = () => {
     getProducts();
   }, [email]);
 
+  const handleRemove = async (id, quantity) => {
+    try {
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/remove-product/${email}/${id}`);
+      await axios.put(`https://bibliotheca-backend.onrender.com/api/add-remove-product/${id}/${quantity}`);
+      setUser(prevUser => ({
+        ...prevUser,
+        Basket: prevUser.Basket.filter(item => item !== id),
+        purchaseQuantity: prevUser.purchaseQuantity.filter((_, index) => index !== prevUser.Basket.indexOf(id))
+      }));
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const isAllZeros = (array) => array && array.every(value => value === 0);
+  window.onload=()=>{
+    toast("Product removed from basket....")
+  }
+
   return (
     <>
       <Navbar />
+      <ToastContainer />
+
       <div id="pCard">
         <br />
         {loading ? (
           <Loader />
+        ) : user && user.Basket && (user.Basket.length === 0 || isAllZeros(user.purchaseQuantity)) ? (
+          <>
+          <h1 style={{ color: "white" }}>Nothing in the basket.....</h1>
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          </>
         ) : (
-          user && user.Basket && user.Basket.length === 0 ? (
-            <>
-            <h1 style={{color:"white"}}>Nothing in the basket.....</h1>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            </>
-          ) : (
-            user &&
-            user.Basket &&
-            user.Basket.map((ind) => (
+          user &&
+          user.Basket &&
+          user.Basket.map((ind, index) => (
+            user.purchaseQuantity[index] !== 0 && (
               <div id="cCard" key={products[ind].id}>
                 <span id="br"></span>
                 <div id="Details">
@@ -77,27 +101,29 @@ const Basket = () => {
                   <div id="bDetails">
                     <br />
                     <Link style={{ textDecoration: "none" }} to="/details" state={products[ind]}>
-                      <h2>{products[ind].Name}</h2>
+                      <h2 onClick={() => localStorage.setItem("quant", JSON.stringify(user.purchaseQuantity[index]))}>
+                        {products[ind].Name}
+                      </h2> 
                     </Link>
                     <h4>{products[ind].author}</h4>
-                    <ReadMore id="desc">{products[ind].caption}</ReadMore>
                   </div>
                   <div id="Bpurchase">
-                    <h3>Quantity : {user.purchaseQuantity[user.Basket.indexOf(ind)]}</h3>
+                    <h3>Quantity: {user.purchaseQuantity[index]}</h3>
                     <br />
                     <Link to="/details" state={products[ind]}>
-                      <button className="add-button">
-                        <i className="fa fa-shopping-bag" aria-hidden="true"></i> Buy Now
+                      <button className="add-button" onClick={() => localStorage.setItem("quant", JSON.stringify(user.purchaseQuantity[index]))}>
+                        <i className="fa fa-shopping-bag" aria-hidden="true"></i> Buy
                       </button>
                     </Link>
-                    <button className="add-button">
-                      <i className="fa fa-times" aria-hidden="true"></i> Remove
+                    <br/><br/>
+                    <button className="add-button" onClick={() => handleRemove(products[ind].id, user.purchaseQuantity[index])}>
+                      <i className="fa fa-times" aria-hidden="true"></i>Cancel
                     </button>
                   </div>
                 </div>
               </div>
-            ))
-          )
+            )
+          ))
         )}
       </div>
       <Footer />

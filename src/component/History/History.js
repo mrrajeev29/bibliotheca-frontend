@@ -1,89 +1,112 @@
 import "./History.css";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer"
+import Footer from "../Footer/Footer";
+import axios from "axios";
+import Loader from "../Loader/Loader";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const History = () => {
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+    const email = localStorage.getItem("email");
+    const un = localStorage.getItem("UserName");
+
+    const getUserDetail = async () => {
+        try {
+            const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/details/${email}`);
+            setUser(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getProducts = async () => {
+        setLoading(true);
+        try {
+            const { data } = await axios.get(`https://bibliotheca-backend.onrender.com/api/all/`);
+            setProducts(data);
+        } catch (error) {
+            console.log(error);
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        getUserDetail();
+        getProducts();
+    }, [email]);
+
     return (
         <>
-        <Navbar/>
-            <div className="order-history">
-                <div className="container1">
-                <div className="sidebar1">
-                    <div className="profile1">
-                        <div className="avatar1"></div>
-                        <p>Hello, Kalpana Raj</p>
-                    </div>
-                    <div className="menu1">
-                        <Link to="/mainpage"><button>Home</button></Link>
-                        <Link to="/orderhistory"><button>My Orders</button></Link>
+            <Navbar />
+            <ToastContainer />
 
-                        <Link to="/yourbasket"><button>Basket</button></Link>
-                        <Link id="Sbtn"><button>Coupons</button></Link>
-                        <Link to="/"><button>Logout</button></Link>
-                    </div>
-                </div>
-                </div>
-                <div className="orders">
-                    <p className="heading" style={{textAlign:"center",color:"white"}}>My Order History</p>
-                    <div className="order">
-                        <div className="order-info">
-                            <p>Deliver by Mon, 11 June 2024</p>
-                            <div className="order-details">
-                                <div className="image-section">
-                                    <div className="thumbnail-a">
-                                        <img className="thumbnail" src="https://www.cengage.com/covers/imageServlet?image_type=LRGFC&catalog=cengage&epi=36773094918742522091049498331432346312" alt="Product" />
-                                    </div>
+            {loading ? (
+                <Loader />
+            ) : (
+                <>
+                    <div className="order-history">
+                        <div className="container1">
+                            <div className="sidebar1">
+                                <div className="profile1">
+                                    <div className="avatar1"></div>
+                                    <p>Hello, {un}</p>
                                 </div>
-                                <div className="details-section">
-                                    <h1 className="product-name">Cengage College Algebra</h1>
-                                    <h4>Gustafson Hughes</h4>
-                                    <div className="price">
-                                        <span className="original-price">₹700</span>
-                                    </div>
+                                <div className="menu1">
+                                    <Link to="/mainpage"><button>Home</button></Link>
+                                    <Link to="/orderhistory"><button>My Orders</button></Link>
+                                    <Link to="/yourbasket"><button>Basket</button></Link>
+                                    <Link id="Sbtn"><button>Coupons</button></Link>
+                                    <Link to="/"><button>Logout</button></Link>
                                 </div>
                             </div>
-                            <p>Exchange/Return available before 16 June, 2024</p>
                         </div>
-                        <FeedbackSection />
-                        <div className="order-summary">
-                            <h3>Order Summary</h3>
-                            <p>Total Items: 1</p>
-                            <p>Total Price: ₹700</p>
-                            <button className="reorder-button">Reorder</button>
+
+                        <div className="orders">
+                            <p className="heading" style={{ textAlign: "center", color: "white" }}>My Order History</p>
+                            {user && user.Buy && user.Buy.length === 0 ? (
+                                <h1 style={{ color: "white" }}>Nothing in the basket.....</h1>
+                            ) : (
+                                user &&
+                                user.Buy &&
+                                user.Buy.map((ind, index) => (
+                                    <div className="order" key={products[ind].id}>
+                                        <div className="order-info">
+                                            <div className="order-details">
+                                                <div className="image-section">
+                                                    <div className="thumbnail-a">
+                                                        <img className="thumbnail" src={products[ind].Img} alt="Product" />
+                                                    </div>
+                                                </div>
+                                                <div className="details-section">
+                                                    <h1 className="product-name">{products[ind].Name}</h1>
+                                                    <h4>{products[ind].author}</h4>
+                                                    <div className="price">
+                                                        <span className="original-price">₹{products[ind].Price}</span>
+                                                        <span className="price-itemO">₹{parseInt(0.7 * products[ind].Price)}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p>Order Confirmed and will be delivered to you soon.</p>
+                                        </div>
+                                        <FeedbackSection />
+                                        <div className="order-summary">
+                                            <h3>Order Summary</h3>
+                                            <p>Total Items: {user.buyQuantity[index]}</p>
+                                            <p>Total Price: ₹{parseInt(0.7 * products[ind].Price) * user.buyQuantity[index] + 40}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
-                    <div className="order">
-                        <div className="order-info">
-                            <p>Delivered on Mon, 6 June 2024</p>
-                            <div className="order-details">
-                                <div className="image-section">
-                                    <div className="thumbnail-a">
-                                        <img className="thumbnail" src="https://www.cengage.com/covers/imageServlet?image_type=LRGFC&catalog=cengage&epi=36773094918742522091049498331432346312" alt="Product" />
-                                    </div>
-                                </div>
-                                <div className="details-section">
-                                    <h1 className="product-name">Cengage College Algebra</h1>
-                                    <h4>Gustafson Hughes</h4>
-                                    <div className="price">
-                                        <span className="original-price">₹700</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p>Exchange/Return available before 16 June, 2024</p>
-                        </div>
-                        <FeedbackSection />
-                        <div className="order-summary">
-                            <h3>Order Summary</h3>
-                            <p>Total Items: 1</p>
-                            <p>Total Price: ₹700</p>
-                            <button className="reorder-button">Reorder</button>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-            </div>
+                </>
+            )}
+            
         </>
     );
 };
@@ -93,13 +116,17 @@ const FeedbackSection = () => {
 
     const handleRating = (rate) => {
         setRating(rate);
+        toast("Thanks for rating....")
     };
 
     return (
         <div className="feedback">
             <StarRating rating={rating} handleRating={handleRating} />
-            <textarea className="feedback-area" placeholder="Write your feedback here..."></textarea>
-            <button onClick={()=>{alert("Thanks for your feedback")}} className="feedback-button">Give Feedback</button>
+            <textarea className="feedback-area" id="feedback-text" placeholder="Write your feedback here..."></textarea>
+            <button onClick={() => {
+                const feedbackText = document.getElementById("feedback-text").value;
+                feedbackText.length > 0 ? toast("Thanks for your feedback") : toast("Please fill in the feedback first...");
+            }} className="feedback-button">Give Feedback</button>
         </div>
     );
 };

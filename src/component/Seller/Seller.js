@@ -3,7 +3,8 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Seller = () => {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
@@ -62,6 +63,7 @@ const Seller = () => {
     return (
         <>
             <Navbar />
+            <ToastContainer />
             <p id="sName">Seller : {uName}</p>
             <form id="spForm" onSubmit={handleSubmit}>
                 <div id="scForm">
