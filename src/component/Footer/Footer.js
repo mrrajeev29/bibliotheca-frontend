@@ -39,7 +39,7 @@ const Footer=()=>{
             <a href="https://github.com/mrrajeev29" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
 
                 <a href="https://www.facebook.com/AarabhMalhotra.29" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                <a target="_blank" href="https://www.instagram.com/its_mr_rajeev/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a target="_blank" href="https://www.instagram.com/_rajeev_on_line_/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                 <a target="_blank" href="https://www.linkedin.com/in/rajeev-ranjan-9990b9226/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                 <a target="_blank" href="https://twitter.com/PrinceG49181050"><i class="fa fa-twitter" aria-hidden="true"></i></a>
             </div>
