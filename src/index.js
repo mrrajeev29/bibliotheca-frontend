@@ -22,12 +22,16 @@ import Footer from './component/Footer/Footer';
 import History from './component/History/History';
 import Faq from './component/FAQ/Faq';
 import Password from './component/Change Password/Password';
-
-const token = localStorage.getItem('token');
+import Firstpage from './component/FirstPage/Firstpage';
+const token =await localStorage.getItem('token');
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element:!token?<Firstpage/>: <Navigate replace to="mainpage" />,
+  },
+  {
+    path: 'login',
     element: <Login />,
   },
   {

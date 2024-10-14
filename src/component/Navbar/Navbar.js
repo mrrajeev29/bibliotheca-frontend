@@ -1,7 +1,8 @@
-import { Component, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 window.onresize=function()
 {
@@ -29,6 +30,7 @@ onscroll=function()
 }
 const Navbar=()=>{
 
+    const navigate=useNavigate();
 
    /* const [user, setUser] = useState([]);
 	const email = localStorage.getItem("email");
@@ -43,7 +45,11 @@ const Navbar=()=>{
   }}
 	  getUserDetail();
 */
-    const un=localStorage.getItem('UserName')
+
+        const un= localStorage.getItem('UserName')
+        const token= localStorage.getItem('token')
+    
+
 
 	 const handleLogout = () => {
 		localStorage.removeItem("token");
@@ -51,6 +57,17 @@ const Navbar=()=>{
         localStorage.removeItem("UserName");
         localStorage.removeItem("address");
 	};
+
+    const handle=async()=>{
+         const tk= await localStorage.getItem('token')
+        if(tk)
+        {
+            navigate('/profile');
+        }
+        else{
+            toast("Please!, Login First to access....")
+        }
+    }
 
     return(
         <>
@@ -66,8 +83,10 @@ const Navbar=()=>{
             <div>
                 <ul id="navbar" >
                     <li id="i1" style={{display:"none"}}>
-                        <Link to="/profile"> Hi, {un}</Link>
+                        <Link onClick={handle}> Hi, {token ? un:"User"}</Link>
                     </li>
+                    {token?
+                    <>
                     <li>
                         <Link className=""
                         to="/mainpage">
@@ -85,14 +104,24 @@ const Navbar=()=>{
                     <li>
                         <Link to="/contact">Contact</Link>
                     </li>
+                    </>:<><li>
+  <Link>
+    <span>W</span><span>e</span><span>l</span><span>c</span><span>o</span><span>m</span><span>e</span> <span>&ensp;</span>
+    <span>t</span><span>o</span> <span>&ensp;</span>
+    <span>o</span><span>u</span><span>r</span> <span>&ensp;</span>
+    <span>b</span><span>i</span><span>b</span><span>l</span><span>i</span><span>o</span><span>t</span><span>h</span><span>e</span><span>c</span><span>a</span> <span>&ensp;</span>
+    <span>s</span><span>t</span><span>o</span><span>r</span><span>e</span><span>.</span>
+  </Link>
+</li>
+<li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</li></>}
                     <li id="i2" style={{display:"none"}}>
-                        <Link to="/" onClick={handleLogout}>Logout</Link>
+                        <Link to={token?"/":"/login"} onClick={handleLogout}>{token?"Logout":"Login"}</Link>
                     </li>
                     <li>
                         <div >
                             <ul id="navbar">
-                                <li><Link to="/profile">Hi, {un}</Link></li>
-                                <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
+                                <li><Link onClick={handle}>Hi, {token?un:"User"}</Link></li>
+                                <li><Link to={token?"/":"/login"} onClick={handleLogout} >{token?"Logout":"Login"}</Link></li>
                             </ul>
                         </div>
                     </li>
