@@ -23,7 +23,6 @@ import History from './component/History/History';
 import Faq from './component/FAQ/Faq';
 import Password from './component/Change Password/Password';
 import Firstpage from './component/FirstPage/Firstpage';
-import Privacy from './component/Privacy/Privacypolicy';
 const token =await localStorage.getItem('token');
 
 const router = createBrowserRouter([
@@ -89,15 +88,11 @@ const router = createBrowserRouter([
   },
   {
     path: 'faq',
-    element: token ? <Faq /> : <Navigate replace to="/" />,
+    element: <Faq /> ,
   },
   {
     path: 'change-password',
     element: token ? <Password /> : <Navigate replace to="/" />,
-  },
-  {
-    path: 'terms-and-condition',
-    element: <Privacy/>
   },
 ]);
 

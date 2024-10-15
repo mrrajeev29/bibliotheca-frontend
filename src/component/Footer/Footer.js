@@ -1,7 +1,20 @@
+import { toast } from "react-toastify";
 import "./Footer.css"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const Footer=()=>{
+    const navigate=useNavigate();
+    const check=()=>{
+        const token=localStorage.getItem('token');
+        if(token)
+        {
+            navigate('contact');
+        }
+        else
+        {
+            toast("Please, Login to contact us...")
+        }
+    }
     return ( 
         <>
 <footer class="footer-distributed">
@@ -10,21 +23,19 @@ const Footer=()=>{
             <p class="footer-links">
                 <Link to="/mainpage">Home</Link>
                 |                |
-                <Link to="/contact">Contact</Link>
+                <Link onClick={check}>Contact</Link>
                 | |
-                <Link to="/faq">FAQ</Link>
-                | |
-                <Link to="/terms-and-condition">Privacy Policy</Link>
+                <Link to="/faq">Faq</Link>
             </p>
         </div>
         <div class="footer-center">
             <div class="contact-item">
                 <i class="fa fa-map-marker"></i>
-                <p>Bibliotheca Pvt Ltd<span>303, Ram Krishna Apartment </span><span>Road No 12, SK Nagar</span><span>Patna, Bihar-800001</span></p>
+                <p>Vit Chennai<span>Tamil Nadu</span></p>
             </div>
             <div class="contact-item">
                 <i class="fa fa-phone"></i>
-                <p>+91 7766903456</p>
+                <p>+91 6206409201</p>
             </div>
             <div class="contact-item">
                   <i class="fa fa-envelope"></i>

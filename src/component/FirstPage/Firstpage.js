@@ -122,7 +122,7 @@ localStorage.setItem("address",user.address)
     const tk= await localStorage.getItem('token')
    if(!tk)
    {
-       toast('Please! Login First...')
+       toast('Please! Login First to add the items...')
    }
 }
 

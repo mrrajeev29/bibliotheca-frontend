@@ -62,7 +62,8 @@ const MainPage = () => {
   }, []);
  // alert(user)
  localStorage.setItem("UserName",user.Name);
-localStorage.setItem("address",user.address)
+localStorage.setItem("address",user.address);
+localStorage.setItem('ph',user.mob)
 
 
   const handleAddToCart = async(id) => {

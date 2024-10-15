@@ -67,7 +67,7 @@ const Login=()=>{
                 <br/><br/>
                 <p>{error}</p>
                 <div id="btnDiv"><button  >Login</button></div>
-                <p id="sgn">New User ?&emsp;<Link to="signup" id="sgnL">SignUp</Link></p>
+                <p id="sgn">New User ?&emsp;<Link to="/signup" id="sgnL">SignUp</Link></p>
             </div>
             </form>
         </div>
