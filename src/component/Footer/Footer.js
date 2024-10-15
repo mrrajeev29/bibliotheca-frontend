@@ -12,17 +12,19 @@ const Footer=()=>{
                 |                |
                 <Link to="/contact">Contact</Link>
                 | |
-                <Link to="/faq">Faq</Link>
+                <Link to="/faq">FAQ</Link>
+                | |
+                <Link to="/terms-and-condition">Privacy Policy</Link>
             </p>
         </div>
         <div class="footer-center">
             <div class="contact-item">
                 <i class="fa fa-map-marker"></i>
-                <p>Vit Chennai<span>Tamil Nadu</span></p>
+                <p>Bibliotheca Pvt Ltd<span>303, Ram Krishna Apartment </span><span>Road No 12, SK Nagar</span><span>Patna, Bihar-800001</span></p>
             </div>
             <div class="contact-item">
                 <i class="fa fa-phone"></i>
-                <p>+91 6206409201</p>
+                <p>+91 7766903456</p>
             </div>
             <div class="contact-item">
                   <i class="fa fa-envelope"></i>
