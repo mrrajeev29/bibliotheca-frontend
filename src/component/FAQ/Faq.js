@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const Faq = () => {
     
     const [activeIndex, setActiveIndex] = useState(null);
@@ -37,6 +39,8 @@ const Faq = () => {
   return (
 <>
 <Navbar/>
+<ToastContainer />
+
   <div className="faq-container">
     <h1>Frequently Asked Questions</h1>
     {faqs.map((faq, index) => (

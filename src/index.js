@@ -23,6 +23,7 @@ import History from './component/History/History';
 import Faq from './component/FAQ/Faq';
 import Password from './component/Change Password/Password';
 import Firstpage from './component/FirstPage/Firstpage';
+import Privacy from './component/Privacy/Privacy';
 const token =await localStorage.getItem('token');
 
 const router = createBrowserRouter([
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
     path: 'change-password',
     element: token ? <Password /> : <Navigate replace to="/" />,
   },
+  {
+    path: 'terms-and-condition',
+    element: <Privacy/>
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
